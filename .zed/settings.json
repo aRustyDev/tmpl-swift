@@ -4,6 +4,96 @@
         "border_size": 1.0,
         "inactive_opacity": 1.0
     },
+    "context_servers": {
+        "ast-grep": {
+            "source": "custom",
+            "command": "docker",
+            "args": ["run", "-i", "--rm", "-v", "$PROJECT_DIR:/data", "mcp/ast-grep"],
+            "env": {
+                "PROJECT_DIR": "$PWD"
+            }
+        },
+        "pre-commit": {
+            "source": "custom",
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "-v",
+                "$PROJECT_DIR:/workspace",
+                "ghcr.io/arustydev/mcp:pre-commit"
+            ],
+            "env": {
+                "PROJECT_DIR": "$PWD"
+            }
+        },
+        "just": {
+            "source": "custom",
+            "command": "just-mcp",
+            "args": ["--watch-dir", "$PROJECT_DIR"]
+        },
+        "FileScopeMCP": {
+            "command": "node",
+            "args": ["<build script sets this>/mcp-server.js","--base-dir=C:/Users/admica/my/project/base"],
+            "transport": "stdio",
+            "disabled": false,
+            "alwaysAllow": []
+        },
+        "filesystem": {
+            "source": "custom",
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-filesystem", "$PROJECT_DIR"]
+        },
+        "git": {
+            "source": "custom",
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/git", "$PROJECT_DIR"]
+        },
+        "sqlite": {
+            "source": "custom",
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/sqlite", "$PROJECT_DIR"]
+        },
+        "smart-tree": {
+            "command": "st",
+            "args": ["--mcp"],
+            "env": {}
+        },
+        "swift-lsp": {
+            "command": "mcp-language-server",
+            "args": [
+                "--workspace",
+                "$PROJECT_DIR",
+                "--lsp",
+                "swift-lsp-executable"
+            ],
+            "env": {
+                "LOG_LEVEL": "DEBUG"
+            }
+        },
+        "objc-lsp": {
+            "command": "mcp-language-server",
+            "args": [
+                "--workspace",
+                "$PROJECT_DIR",
+                "--lsp",
+                "objc-lsp-executable"
+            ],
+            "env": {
+                "LOG_LEVEL": "DEBUG"
+            }
+        },
+        "lldb-mcp": {
+            "command": "python3",
+            "args": ["/path/to/lldb-mcp/lldb_mcp.py"],
+            "disabled": false
+        },
+        "xcode": {
+            "command": "node",
+            "args": ["/path/to/xcode-mcp-server/dist/index.js"]
+        }
+    },
     "tab_size": 4,
     "telemetry": {
         "diagnostics": true,
